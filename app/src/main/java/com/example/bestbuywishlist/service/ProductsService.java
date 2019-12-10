@@ -20,7 +20,7 @@ public interface ProductsService {
     Call<List<Products>> getAllProducts();
 
 
-    // Example - get maintenance record by ID
+    // Get single product by...
     @GET("Products/{id}/")
     Call<Products> get(@Path("id") int id);
 
