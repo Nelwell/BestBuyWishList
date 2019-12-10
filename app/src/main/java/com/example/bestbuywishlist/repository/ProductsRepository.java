@@ -73,31 +73,28 @@ public class ProductsRepository {
     }
 
 
-    public MutableLiveData<Products> getProduct(final int id) {
+    public MutableLiveData<Products> getProduct(final String name) {
 
-        /* Fetch one VehicleMaintenance by its ID. The value is available by observing the
-        MutableLiveData object returned from this method.
-
-        This method isn't used in the app, but fetching an item by ID is
-        a very common task so I added it anyway, as an example. */
+        /* Fetch one Product by its name. The value is available by observing the
+        MutableLiveData object returned from this method.*/
 
         final MutableLiveData<Products> product = new MutableLiveData<>();
 
-        productsService.get(id).enqueue(new Callback<Products>() {
+        productsService.get(name).enqueue(new Callback<Products>() {
             @Override
             public void onResponse(Call<Products> call, Response<Products> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "fetched record " + response.body());
                     product.setValue(response.body());
                 } else {
-                    Log.e(TAG, "Error getting record id " + id + " because " + response.message());
+                    Log.e(TAG, "Error getting record id " + name + " because " + response.message());
                     product.setValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<Products> call, Throwable t) {
-                Log.e(TAG, "Error getting record id " + id, t);
+                Log.e(TAG, "Error getting record id " + name, t);
             }
         });
 
@@ -163,13 +160,13 @@ public class ProductsRepository {
 //    }
 
 
-    public void delete(final Products vehicle) {
+    public void delete(final Products product) {
 
-        productsService.delete(vehicle.getId()).enqueue(new Callback<Void>() {
+        productsService.delete(product.getName()).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "deleted record for " + vehicle);
+                    Log.d(TAG, "deleted record for " + product);
                     getAllProducts();
                 } else {
                     Log.e(TAG, "Error deleting record, message from server: " + response.message());
@@ -178,7 +175,7 @@ public class ProductsRepository {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.e(TAG, "Error deleting record for " + vehicle, t);
+                Log.e(TAG, "Error deleting record for " + product, t);
             }
         });
     }

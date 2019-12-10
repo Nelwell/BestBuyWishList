@@ -2,9 +2,17 @@ package com.example.bestbuywishlist.db;
 
 import android.content.Context;
 
+import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
+import com.example.bestbuywishlist.model.Products;
+
+/** Creates database on device */
+// Implemented as a thread-safe Singleton
+@Database(entities = {Products.class}, version = 1, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class ProductsDatabase extends RoomDatabase {
 
     private static volatile ProductsDatabase INSTANCE;

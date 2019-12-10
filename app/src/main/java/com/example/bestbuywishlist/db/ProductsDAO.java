@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface ProductsDAO {
 
-    @Query("SELECT * FROM Products ORDER BY dateEntered DESC")
+    @Query("SELECT * FROM Products ORDER BY name")
     LiveData<List<Products>> getAllProducts();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE) // Ignore new record for an existing place
@@ -24,10 +24,10 @@ public interface ProductsDAO {
     void delete(Products... p);
 
     @Query("DELETE FROM Products")
-    void deleteAllAutoRecords();
+    void deleteAllProducts();
 
-    @Query("SELECT * FROM Products WHERE autoId = :autoId LIMIT 1")
-    LiveData<Products> getRecordForAutoId(int autoId);
+    @Query("SELECT * FROM Products WHERE name = :name LIMIT 1")
+    LiveData<Products> getProductByName(String name);
 
 //    @Query("SELECT * FROM AutoRecord WHERE year like '%' ) // TODO finish query
 //    LiveData<AutoRecord> getRecordForAuto(String autoId);

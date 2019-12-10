@@ -26,8 +26,8 @@ public class ProductsViewModel extends AndroidViewModel {
         return allProducts;
     }
 
-    public MutableLiveData<Products> getProduct(int id) {
-        return productsRepository.getProduct(id);
+    public MutableLiveData<Products> getProduct(String name) {
+        return productsRepository.getProduct(name);
     }
 
 //    public MutableLiveData<String> insert(Products maintenance) {

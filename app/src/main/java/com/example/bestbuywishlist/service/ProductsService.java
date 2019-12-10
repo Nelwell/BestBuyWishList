@@ -1,11 +1,10 @@
 package com.example.bestbuywishlist.service;
 
-import android.telecom.Call;
-
 import com.example.bestbuywishlist.model.Products;
 
 import java.util.List;
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -20,9 +19,9 @@ public interface ProductsService {
     Call<List<Products>> getAllProducts();
 
 
-    // Get single product by...
+    // Get single product by name
     @GET("Products/{id}/")
-    Call<Products> get(@Path("id") int id);
+    Call<Products> get(@Path("name") String name);
 
 
 //    // Insert maintenance record
@@ -33,10 +32,10 @@ public interface ProductsService {
 //    // Update maintenance record
 //    @PATCH("Products/{id}/")
 //    Call<Void> update(@Body Products product, @Path("id") int id);
-
-
-    // Delete maintenance record
-    @DELETE("Products/{id}/")
-    Call<Void> delete(@Path("id") int id);
+//
+//
+//    // Delete single product
+//    @DELETE("Products/{id}/")
+//    Call<Void> delete(@Path("id") String name);
 
 }
