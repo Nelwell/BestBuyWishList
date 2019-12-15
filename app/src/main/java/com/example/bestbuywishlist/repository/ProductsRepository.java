@@ -1,12 +1,15 @@
 package com.example.bestbuywishlist.repository;
 
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.bestbuywishlist.model.Products;
-import com.example.bestbuywishlist.service.AuthorizationHeaderInterceptor;
+import com.example.bestbuywishlist.R;
+import com.example.bestbuywishlist.model.Product;
+import com.example.bestbuywishlist.model.ProductsResponse;
 import com.example.bestbuywishlist.service.ProductsService;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -20,19 +23,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProductsRepository {
 
+    private ImageView productImageView;
+
     private static final String TAG = "PRODUCTS_REPOSITORY";
 
     private ProductsService productsService;
-    private final String baseURL = "https://api.bestbuy.com/v1/products";
-    private MutableLiveData<List<Products>> allProducts;
+    private final String baseURL = "https://api.bestbuy.com/v1/";
+    private MutableLiveData<List<Product>> allProducts;
 
     public ProductsRepository() {
 
         // Create client with interceptor to set header on each request
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new AuthorizationHeaderInterceptor())
+//                .addInterceptor(new AuthorizationHeaderInterceptor())
                 .addInterceptor(logging)
                 .build();
 
@@ -43,28 +48,32 @@ public class ProductsRepository {
                 .client(client)
                 .build();
 
-        // Create implementation of VehicleService interface
+        // Create implementation of ProductsService interface
         productsService = retrofit.create(ProductsService.class);
 
         // Initialize allProducts
         allProducts = new MutableLiveData<>();
     }
 
-    public MutableLiveData<List<Products>> getAllProducts() {
+    public MutableLiveData<List<Product>> searchProducts(final String searchTerms) {
 
-        productsService.getAllProducts().enqueue(new Callback<List<Products>>() {
+        productsService.searchProducts("search="+searchTerms).enqueue(new Callback<ProductsResponse>() {
             @Override
-            public void onResponse(Call<List<Products>> call, Response<List<Products>> response) {
+            public void onResponse(Call<ProductsResponse> call, Response<ProductsResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "getAllMaintenanceRecords response body: " + response.body());
-                    allProducts.setValue(response.body());
+                    Log.d(TAG, "searchProducts response body: " + response.body());
+                    allProducts.setValue(response.body().getProducts());
+//                    List<Product> products = allProducts;
+//                    String imageURL = allProducts.getValue(response.body().getProducts().get(0));
+//                    String imageURL = "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/5092/5092126_s.gif";
+//                    Picasso.get().load(imageURL).fit().centerCrop().into((ImageView) productImageView.findViewById(R.id.product_thumbnail));
                 } else {
                     Log.e(TAG, "Error getting all records, message from server: " + response.message());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Products>> call, Throwable t) {
+            public void onFailure(Call<ProductsResponse> call, Throwable t) {
                 Log.e(TAG, "Error fetching all records", t);
             }
         });
@@ -73,35 +82,35 @@ public class ProductsRepository {
     }
 
 
-    public MutableLiveData<Products> getProduct(final String name) {
+//    public MutableLiveData<Product> getProduct(final String name) {
+//
+//        /* Fetch one Product by its name. The value is available by observing the
+//        MutableLiveData object returned from this method.*/
+//
+//        final MutableLiveData<Product> product = new MutableLiveData<>();
+//
+//        productsService.get(name).enqueue(new Callback<Product>() {
+//            @Override
+//            public void onResponse(Call<Product> call, Response<Product> response) {
+//                if (response.isSuccessful()) {
+//                    Log.d(TAG, "fetched record " + response.body());
+//                    product.setValue(response.body());
+//                } else {
+//                    Log.e(TAG, "Error getting record id " + name + " because " + response.message());
+//                    product.setValue(null);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Product> call, Throwable t) {
+//                Log.e(TAG, "Error getting record id " + name, t);
+//            }
+//        });
+//
+//        return product;
+//    }
 
-        /* Fetch one Product by its name. The value is available by observing the
-        MutableLiveData object returned from this method.*/
-
-        final MutableLiveData<Products> product = new MutableLiveData<>();
-
-        productsService.get(name).enqueue(new Callback<Products>() {
-            @Override
-            public void onResponse(Call<Products> call, Response<Products> response) {
-                if (response.isSuccessful()) {
-                    Log.d(TAG, "fetched record " + response.body());
-                    product.setValue(response.body());
-                } else {
-                    Log.e(TAG, "Error getting record id " + name + " because " + response.message());
-                    product.setValue(null);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Products> call, Throwable t) {
-                Log.e(TAG, "Error getting record id " + name, t);
-            }
-        });
-
-        return product;
-    }
-
-//    public MutableLiveData<String> insert(final Products vehicle) {
+//    public MutableLiveData<String> insert(final Product vehicle) {
 //
 //        final MutableLiveData<String> insertResult = new MutableLiveData<>();
 //
@@ -138,7 +147,7 @@ public class ProductsRepository {
 //    }
 //
 //
-//    public void update(final Products vehicle) {
+//    public void update(final Product vehicle) {
 //
 //        productsService.update(vehicle, vehicle.getId()).enqueue(new Callback<Void>() {
 //            @Override
@@ -158,25 +167,25 @@ public class ProductsRepository {
 //        });
 //
 //    }
-
-
-    public void delete(final Products product) {
-
-        productsService.delete(product.getName()).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Log.d(TAG, "deleted record for " + product);
-                    getAllProducts();
-                } else {
-                    Log.e(TAG, "Error deleting record, message from server: " + response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e(TAG, "Error deleting record for " + product, t);
-            }
-        });
-    }
+//
+//
+//    public void delete(final Product product) {
+//
+//        productsService.delete(product.getName()).enqueue(new Callback<Void>() {
+//            @Override
+//            public void onResponse(Call<Void> call, Response<Void> response) {
+//                if (response.isSuccessful()) {
+//                    Log.d(TAG, "deleted record for " + product);
+//                    getAllProducts();
+//                } else {
+//                    Log.e(TAG, "Error deleting record, message from server: " + response.message());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Void> call, Throwable t) {
+//                Log.e(TAG, "Error deleting record for " + product, t);
+//            }
+//        });
+//    }
 }

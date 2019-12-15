@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BestBuyWishList</string>
+    <string name="wish_list">Wish List</string>
+    <string name="product_name">Name</string>
+    <string name="product_price">Price</string>
+    <string name="product_description">Description</string>
+    <string name="search_products">Search products</string>
+    <string name="search">Search</string>
 </resources>
