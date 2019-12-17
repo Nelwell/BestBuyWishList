@@ -56,9 +56,10 @@
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:focusable="true"
+            cardview:backgroundTint="@color/colorImageBackground"
             cardview:layout_constraintBottom_toTopOf="@+id/product_name"
             cardview:layout_constraintEnd_toEndOf="parent"
-            cardview:srcCompat="@android:drawable/btn_star_big_on" />
+            cardview:srcCompat="@drawable/ic_add_to_wishlist" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

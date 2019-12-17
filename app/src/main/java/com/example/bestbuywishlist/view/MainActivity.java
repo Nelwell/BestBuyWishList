@@ -24,10 +24,11 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        //I added this if statement to keep the selected fragment when rotating the device
+        // Keeps the selected fragment during rotation
         if (savedInstanceState == null) {
             viewProductBrowser();
         }
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements
                             break;
                     }
 
-                    getSupportFragmentManager().beginTransaction().replace(android.R.id.content,
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
                             selectedFragment).commit();
 
                     return true;

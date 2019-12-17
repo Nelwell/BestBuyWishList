@@ -24,6 +24,7 @@ import com.example.bestbuywishlist.db.ProductRecord;
 import com.example.bestbuywishlist.model.Product;
 import com.example.bestbuywishlist.viewmodel.ProductViewModel;
 import com.example.bestbuywishlist.viewmodel.WishListViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class ProductBrowserFragment extends Fragment {
 
     private static final String TAG = "ProductBrowserFragment";
 
-//    FloatingActionButton addMaintenanceFab;
+    FloatingActionButton addToWishList;
     private ProductAdapter adapter;
     private RecyclerView recyclerView;
     private ProductViewModel productViewModel;
@@ -56,7 +57,7 @@ public class ProductBrowserFragment extends Fragment {
     }
 
     public static ProductBrowserFragment newInstance() {
-        return new ProductBrowserFragment();
+                return new ProductBrowserFragment();
     }
 
     // Set listeners
