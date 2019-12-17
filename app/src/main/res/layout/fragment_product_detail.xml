@@ -23,7 +23,7 @@
                 android:id="@+id/product_image"
                 android:layout_width="125dp"
                 android:layout_height="170dp"
-                android:background="#2d2d2d"
+                android:background="@color/colorImageBackground"
                 android:scaleType="centerCrop" />
 
             <TextView

@@ -20,8 +20,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bestbuywishlist.R;
+import com.example.bestbuywishlist.db.ProductRecord;
 import com.example.bestbuywishlist.model.Product;
 import com.example.bestbuywishlist.viewmodel.ProductViewModel;
+import com.example.bestbuywishlist.viewmodel.WishListViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class ProductBrowserFragment extends Fragment {
     private UponAppLaunchListener uponAppLaunchListener;
     private EditText searchEditText;
     private Button searchButton;
+    private WishListViewModel wishListViewModel;
 //    private StartNewMaintenanceItemListener newMaintenanceItemListener;
 
     public interface UponAppLaunchListener {
@@ -82,7 +85,7 @@ public class ProductBrowserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_browser, container, false);
 
-        recyclerView = view.findViewById(R.id.product_recycler_view);
+        recyclerView = view.findViewById(R.id.browser_list_rv);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 //        recyclerView.getLayoutManager().scrollToPosition(0);
         recyclerView.setHasFixedSize(true);
@@ -98,7 +101,23 @@ public class ProductBrowserFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onResume(); // Pass searched terms into ViewModel's MutableLiveData
+                productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
+                productViewModel.searchProducts(searchEditText.getText().toString().
+                        replaceAll("\\s+", "&search=")).observe(getActivity(), new Observer<List<Product>>() {
+
+                    @Override
+                    public void onChanged(List<Product> products) {
+                        if (searchEditText.getText().toString().length() > 0) {
+                            recyclerView.getLayoutManager().scrollToPosition(0);
+                        }
+                        adapter.setProduct(products);
+                        Product product = products.get(0);
+                        ProductRecord productRecord = new ProductRecord(product.getSku(), product.getPrice(), product.getName());
+//                        wishListViewModel.insert(productRecord);
+                        // For testing
+//                Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 searchEditText.setText("");
             }
         });
@@ -110,20 +129,22 @@ public class ProductBrowserFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
-        productViewModel.searchProducts(searchEditText.getText().toString().
-                replaceAll("\\s+", "&search=")).observe(this, new Observer<List<Product>>() {
-
-            @Override
-            public void onChanged(List<Product> products) {
-                if (searchEditText.getText().toString().length() > 0) {
-                    recyclerView.getLayoutManager().scrollToPosition(0);
-                }
-                adapter.setProduct(products);
-                // For testing
-//                Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
+//        productViewModel.searchProducts(searchEditText.getText().toString().
+//                replaceAll("\\s+", "&search=")).observe(this, new Observer<List<Product>>() {
+//
+//            @Override
+//            public void onChanged(List<Product> products) {
+//                if (searchEditText.getText().toString().length() > 0) {
+//                    recyclerView.getLayoutManager().scrollToPosition(0);
+//                }
+//                adapter.setProduct(products);
+//                Product product = products.get(0);
+//                ProductRecord productRecord = new ProductRecord(product.getPrice(), product.getName());
+//                // For testing
+////                Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     // Class to create Adapter and perform adapter functions

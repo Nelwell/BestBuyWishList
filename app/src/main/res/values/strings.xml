@@ -6,4 +6,6 @@
     <string name="product_description">Description</string>
     <string name="search_products">Search products</string>
     <string name="search">Search</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="browser">Browser</string>
 </resources>
