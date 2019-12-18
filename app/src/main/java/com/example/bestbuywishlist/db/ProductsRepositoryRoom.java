@@ -18,7 +18,6 @@ public class ProductsRepositoryRoom {
     public ProductsRepositoryRoom(Application application) {
         ProductDatabase db = ProductDatabase.getDatabase(application);
         productDAO = db.productDAO();
-//        mAllAutoRecords = productDAO.getAllAutoRecords();
     }
 
     // LiveData can wrap one item or a list of items inside it.
@@ -31,67 +30,64 @@ public class ProductsRepositoryRoom {
         return productDAO.getProductBySku(sku);
     }
 
-    public void insert(ProductRecord autoRecord) {
+    public void insert(ProductRecord productRecord) {
         // Insert record asynchronously in the background so other processes can continue seamlessly
-        new InsertAutoAsyncTask(productDAO).execute(autoRecord); // when called, calls doInBackground
-        // method automatically and passes 'autoRecord' arg
+        new InsertProductAsyncTask(productDAO).execute(productRecord); // when called, calls doInBackground
+        // method automatically passes 'productRecord' arg
     }
 
-    public void delete(ProductRecord autoRecord) {
+    public void delete(ProductRecord productRecord) {
         // Update record asynchronously in the background
-        new DeleteAutoAsyncTask(productDAO).execute(autoRecord); // when called, calls doInBackground
-        // method automatically and passes 'autoRecord' arg
+        new DeleteProductAsyncTask(productDAO).execute(productRecord); // when called, calls doInBackground
+        // method automatically passes 'productRecord' arg
     }
 
     public void deleteAllAutoRecords() {
-        new DeleteAllAutosAsyncTask(productDAO).execute();
+        new DeleteAllProductsAsyncTask(productDAO).execute();
     }
-
-//    public void delete(int id) {
-//        new DeleteAutoIDAsyncTask(productDAO).execute(id); }
 
 
     // Database tasks must run the background, not on the UI thread
-    private static class InsertAutoAsyncTask extends AsyncTask<ProductRecord, Void, Void> {
+    private static class InsertProductAsyncTask extends AsyncTask<ProductRecord, Void, Void> {
 
-        private ProductDAO autoDAO;
+        private ProductDAO productDAO;
 
         // Constructor
-        private InsertAutoAsyncTask(ProductDAO autoDAO) {
-            this.autoDAO = autoDAO;
+        private InsertProductAsyncTask(ProductDAO productDAO) {
+            this.productDAO = productDAO;
         }
 
         @Override
-        protected Void doInBackground(ProductRecord... autos) {
-            autoDAO.insert(autos[0]);
+        protected Void doInBackground(ProductRecord... products) {
+            productDAO.insert(products[0]);
             return null;
         }
     }
 
     // Database tasks must run in the background, not on the UI thread
-    private static class DeleteAutoAsyncTask extends AsyncTask<ProductRecord, Void, Void> {
+    private static class DeleteProductAsyncTask extends AsyncTask<ProductRecord, Void, Void> {
 
         private ProductDAO dao;
 
         // Constructor
-        private DeleteAutoAsyncTask(ProductDAO dao) {
+        private DeleteProductAsyncTask(ProductDAO dao) {
             this.dao = dao;
         }
 
         @Override
-        protected Void doInBackground(ProductRecord... autos) {
-            dao.delete(autos[0]);
+        protected Void doInBackground(ProductRecord... products) {
+            dao.delete(products[0]);
             return null;
         }
     }
 
     // Database tasks must run in the background, not on the UI thread
-    private static class DeleteAllAutosAsyncTask extends AsyncTask<Void, Void, Void> {
+    private static class DeleteAllProductsAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private ProductDAO dao;
 
         // Constructor
-        private DeleteAllAutosAsyncTask(ProductDAO dao) {
+        private DeleteAllProductsAsyncTask(ProductDAO dao) {
             this.dao = dao;
         }
 

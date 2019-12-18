@@ -8,15 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bestbuywishlist.R;
@@ -25,16 +24,14 @@ import com.example.bestbuywishlist.model.Product;
 import com.example.bestbuywishlist.viewmodel.ProductViewModel;
 import com.example.bestbuywishlist.viewmodel.WishListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProductBrowserFragment extends Fragment {
 
     private static final String TAG = "ProductBrowserFragment";
 
-    FloatingActionButton addToWishList;
     private ProductAdapter adapter;
     private RecyclerView recyclerView;
     private ProductViewModel productViewModel;
@@ -56,9 +53,9 @@ public class ProductBrowserFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ProductBrowserFragment newInstance() {
-                return new ProductBrowserFragment();
-    }
+//    public static ProductBrowserFragment newInstance() {
+//                return new ProductBrowserFragment();
+//    }
 
     // Set listeners
     @Override
@@ -88,7 +85,6 @@ public class ProductBrowserFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.browser_list_rv);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-//        recyclerView.getLayoutManager().scrollToPosition(0);
         recyclerView.setHasFixedSize(true);
 
         // Creates adapter
@@ -96,6 +92,47 @@ public class ProductBrowserFragment extends Fragment {
         // Sets adapter in recycler view
         recyclerView.setAdapter(adapter);
 
+//        // Delete items from recyclerView by swiping, adapted from Coding In Flow's YouTube channel tutorials
+//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+////                productViewModel.delete(mAutoAdapter.getAutoAt(viewHolder.getAdapterPosition()));
+////                Toast.makeText( this, "Vehicle deleted", Toast.LENGTH_SHORT).show();
+//            }
+//        }).attachToRecyclerView(mAutoRecyclerView);
+
+//        addToWishList = view.findViewById(R.id.add_to_wish_list_fab);
+//        addToWishList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                // Bundles all fields into new ProductRecord item
+//                final ProductRecord newWishListItem = new ProductRecord(sku, salePrice, name);
+//                wishListViewModel.insert(adapter.getItemId());
+////                 Insert newWishListItem using wishListViewModel
+//                wishListViewModel.insert(newWishListItem).observe(getActivity(), new Observer<String>() {
+//                    @Override
+//                    public void onChanged(String wl) {
+//                        Log.d(TAG, "s" + wl);
+//                        if (wl.equals("success")) {
+//                            // Notifies Main Activity so fragments can be swapped
+////                            newMaintenanceListener.onNewMaintenanceAdded(newMaintenanceItem);
+//                            Toast.makeText(getActivity(), "Maintenance Item added!", Toast.LENGTH_SHORT).show();
+//                        } else if (wl.contains("duplicate key")) {
+//                            Toast.makeText(getActivity(), "You already added that Maintenance Item!", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            Toast.makeText(getActivity(), "Error adding movie", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+//                productViewModel.delete(mAutoAdapter.getAutoAt(viewHolder.getAdapterPosition()));
+//            }
+//        });
 
         searchEditText = view.findViewById(R.id.search_edit_text);
         searchButton = view.findViewById(R.id.search_button);
@@ -130,6 +167,7 @@ public class ProductBrowserFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        wishListViewModel = ViewModelProviders.of(this).get(WishListViewModel.class);
 //        productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
 //        productViewModel.searchProducts(searchEditText.getText().toString().
 //                replaceAll("\\s+", "&search=")).observe(this, new Observer<List<Product>>() {

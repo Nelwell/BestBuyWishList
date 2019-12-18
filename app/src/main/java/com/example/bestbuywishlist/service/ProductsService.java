@@ -9,7 +9,7 @@ import retrofit2.http.Path;
 
 public interface ProductsService {
 
-    // Get all products from BestBuy database, display up to 120 results
+    // Get all products from BestBuy database matching searched terms, display up to 100 results
     @GET("products({searchFormat})?pageSize=100&format=json&show=image,sku,name,salePrice&apiKey=" + BuildConfig.PRODUCTS_API_KEY)
     Call<ProductsResponse> searchProducts(@Path("searchFormat") String searchFormat);
 

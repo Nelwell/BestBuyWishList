@@ -30,8 +30,8 @@ public class ProductViewModel extends AndroidViewModel {
         return productsRepository.searchProducts(searchTerms);
     }
 
-//    public MutableLiveData<String> insert(Product maintenance) {
-//        return productsRepository.insert(maintenance);
+//    public MutableLiveData<List<Product>> insert(List<Product> product) {
+//        return productsRepository.insert(product);
 //    }
 //
 //    public void update(Product maintenance) {

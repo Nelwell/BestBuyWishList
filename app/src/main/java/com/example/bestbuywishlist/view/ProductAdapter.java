@@ -8,10 +8,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bestbuywishlist.R;
+import com.example.bestbuywishlist.db.ProductRecord;
 import com.example.bestbuywishlist.model.Product;
+import com.example.bestbuywishlist.viewmodel.ProductViewModel;
+import com.example.bestbuywishlist.viewmodel.WishListViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,8 +24,12 @@ import java.util.List;
 
 // Class to create Adapter and perform adapter functions
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductHolder> {
+
+    private WishListViewModel wishListViewModel;
+
     // Where adapter stores its data
     private List<Product> product = new ArrayList<>();
+//    private List<ProductRecord> wishListedProduct = new ArrayList<>();
 
     @NonNull
     @Override
@@ -32,8 +41,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductHolder holder, int position) {
-        Product currentProduct = product.get(position);
+    public void onBindViewHolder(@NonNull ProductHolder holder, final int position) {
+        final Product currentProduct = product.get(position);
+//        final ProductRecord selectedProduct = wishListedProduct.get(position);
 
         holder.productNameTextView.setText(currentProduct.getName());
         if (currentProduct.getImage() != null) {
@@ -43,6 +53,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
             @Override
             public void onClick(View v) {
 
+            }
+        });
+        holder.addToWishList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                wishListViewModel = ViewModelProviders.of().get(WishListViewModel.class);
+                ProductRecord wishListedProduct = new ProductRecord(
+                        currentProduct.getSku(), currentProduct.getPrice(), currentProduct.getName());
+                wishListViewModel.insert(wishListedProduct);
             }
         });
     }
@@ -62,12 +81,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         private TextView productNameTextView;
         private ImageView productImageView;
         private CardView productCardView;
+        private FloatingActionButton addToWishList;
 
-        public ProductHolder(@NonNull View itemView) {
+        private ProductHolder(@NonNull View itemView) {
             super(itemView);
             productNameTextView = itemView.findViewById(R.id.product_name);
             productImageView = itemView.findViewById(R.id.product_thumbnail);
             productCardView = itemView.findViewById(R.id.card_view);
+            addToWishList = itemView.findViewById(R.id.add_to_wish_list_fab);
 
         }
     }

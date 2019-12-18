@@ -5,12 +5,10 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
 
 /** Creates database on device */
 // Implemented as a thread-safe Singleton
 @Database(entities = {ProductRecord.class}, version = 1, exportSchema = false)
-@TypeConverters({Converters.class})
 public abstract class ProductDatabase extends RoomDatabase {
 
     private static volatile ProductDatabase INSTANCE;

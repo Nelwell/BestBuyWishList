@@ -63,10 +63,6 @@ public class ProductsRepository {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "searchProducts response body: " + response.body());
                     allProducts.setValue(response.body().getProducts());
-//                    List<Product> products = allProducts;
-//                    String imageURL = allProducts.getValue(response.body().getProducts().get(0));
-//                    String imageURL = "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/5092/5092126_s.gif";
-//                    Picasso.get().load(imageURL).fit().centerCrop().into((ImageView) productImageView.findViewById(R.id.product_thumbnail));
                 } else {
                     Log.e(TAG, "Error getting all records, message from server: " + response.message());
                 }
@@ -110,15 +106,15 @@ public class ProductsRepository {
 //        return product;
 //    }
 
-//    public MutableLiveData<String> insert(final Product vehicle) {
+//    public MutableLiveData<List<Product>> insert(final List<Product> products) {
 //
-//        final MutableLiveData<String> insertResult = new MutableLiveData<>();
+//        final MutableLiveData<List<Product>> insertResult = new MutableLiveData<>();
 //
-//        productsService.insert(vehicle).enqueue(new Callback<Void>() {
+//        productsService.insert(products).enqueue(new Callback<Void>() {
 //            @Override
 //            public void onResponse(Call<Void> call, Response<Void> response) {
 //                if (response.isSuccessful()) {
-//                    Log.d(TAG, "inserted " + vehicle);
+//                    Log.d(TAG, "inserted " + products);
 //                    insertResult.setValue("success");
 //                    getAllProducts();
 //                } else {
@@ -138,7 +134,7 @@ public class ProductsRepository {
 //            @Override
 //            public void onFailure(Call<Void> call, Throwable t) {
 //                insertResult.setValue("error");
-//                Log.e(TAG, "Error inserting record for " + vehicle, t);
+//                Log.e(TAG, "Error inserting record for " + products, t);
 //            }
 //        });
 //
