@@ -38,19 +38,17 @@ public class MainActivity extends AppCompatActivity implements
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
 
                     switch (item.getItemId()) {
                         case R.id.nav_product_browser:
-                            selectedFragment = new ProductBrowserFragment();
+                            viewProductBrowser();
                             break;
                         case R.id.nav_wishlist:
-                            selectedFragment = new WishListFragment();
+                            Fragment selectedFragment = new WishListFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
+                                    selectedFragment).commit();
                             break;
                     }
-
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
-                            selectedFragment).commit();
 
                     return true;
                 }
@@ -58,10 +56,14 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void viewProductBrowser() {
+        Fragment selectedFragment = getSupportFragmentManager().findFragmentByTag(TAG_VIEW_PRODUCT_BROWSER);
+        if (selectedFragment == null) {
+            selectedFragment = new ProductBrowserFragment();
+        }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ProductBrowserFragment productBrowserFragment = ProductBrowserFragment.newInstance();
-        ft.replace(android.R.id.content, productBrowserFragment, TAG_VIEW_PRODUCT_BROWSER);
-        ft.addToBackStack(null);
+//        ProductBrowserFragment productBrowserFragment = ProductBrowserFragment.newInstance();
+        ft.replace(R.id.frame_layout, selectedFragment, TAG_VIEW_PRODUCT_BROWSER);
+//        ft.addToBackStack(null);
         ft.commit();
     }
 }
