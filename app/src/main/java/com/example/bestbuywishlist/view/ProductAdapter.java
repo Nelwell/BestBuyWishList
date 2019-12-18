@@ -8,13 +8,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bestbuywishlist.R;
 import com.example.bestbuywishlist.db.ProductRecord;
 import com.example.bestbuywishlist.model.Product;
-import com.example.bestbuywishlist.viewmodel.ProductViewModel;
 import com.example.bestbuywishlist.viewmodel.WishListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
@@ -29,7 +27,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
     // Where adapter stores its data
     private List<Product> product = new ArrayList<>();
-//    private List<ProductRecord> wishListedProduct = new ArrayList<>();
+
+    public ProductAdapter(WishListViewModel wishListViewModel) {
+    }
 
     @NonNull
     @Override
@@ -43,7 +43,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     @Override
     public void onBindViewHolder(@NonNull ProductHolder holder, final int position) {
         final Product currentProduct = product.get(position);
-//        final ProductRecord selectedProduct = wishListedProduct.get(position);
 
         holder.productNameTextView.setText(currentProduct.getName());
         if (currentProduct.getImage() != null) {
@@ -58,8 +57,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         holder.addToWishList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                wishListViewModel = ViewModelProviders.of().get(WishListViewModel.class);
                 ProductRecord wishListedProduct = new ProductRecord(
+                        wishListViewModel.deleteAllAutoRecords();
                         currentProduct.getSku(), currentProduct.getPrice(), currentProduct.getName());
                 wishListViewModel.insert(wishListedProduct);
             }

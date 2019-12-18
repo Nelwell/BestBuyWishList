@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+                    // Switch case statement to call fragment associated with bottom nav button when pressed
                     switch (item.getItemId()) {
                         case R.id.nav_product_browser:
                             viewProductBrowser();
@@ -61,9 +62,7 @@ public class MainActivity extends AppCompatActivity implements
             selectedFragment = new ProductBrowserFragment();
         }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//        ProductBrowserFragment productBrowserFragment = ProductBrowserFragment.newInstance();
         ft.replace(R.id.frame_layout, selectedFragment, TAG_VIEW_PRODUCT_BROWSER);
-//        ft.addToBackStack(null);
         ft.commit();
     }
 }

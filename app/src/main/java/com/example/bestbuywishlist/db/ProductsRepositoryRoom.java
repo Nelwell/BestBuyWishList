@@ -42,7 +42,7 @@ public class ProductsRepositoryRoom {
         // method automatically passes 'productRecord' arg
     }
 
-    public void deleteAllAutoRecords() {
+    public void deleteAllProductRecords() {
         new DeleteAllProductsAsyncTask(productDAO).execute();
     }
 

@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bestbuywishlist.R;
@@ -25,7 +24,6 @@ import com.example.bestbuywishlist.viewmodel.ProductViewModel;
 import com.example.bestbuywishlist.viewmodel.WishListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Date;
 import java.util.List;
 
 public class ProductBrowserFragment extends Fragment {
@@ -87,8 +85,10 @@ public class ProductBrowserFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setHasFixedSize(true);
 
-        // Creates adapter
-        adapter = new ProductAdapter();
+        wishListViewModel = ViewModelProviders.of(this).get(WishListViewModel.class);
+
+        // Creates adapter and passes wishListViewModel to ProductAdapter class
+        adapter = new ProductAdapter(wishListViewModel);
         // Sets adapter in recycler view
         recyclerView.setAdapter(adapter);
 
@@ -167,7 +167,7 @@ public class ProductBrowserFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        wishListViewModel = ViewModelProviders.of(this).get(WishListViewModel.class);
+//        wishListViewModel = ViewModelProviders.of(this).get(WishListViewModel.class);
 //        productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
 //        productViewModel.searchProducts(searchEditText.getText().toString().
 //                replaceAll("\\s+", "&search=")).observe(this, new Observer<List<Product>>() {

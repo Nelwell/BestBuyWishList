@@ -27,7 +27,7 @@ public class WishListViewModel extends AndroidViewModel {
         return productListRecords;
     }
 
-    public LiveData<ProductRecord> getRecordForName(String sku) {
+    public LiveData<ProductRecord> getProductBySku(String sku) {
         return productsRepositoryRoom.getProductBySku(sku);
     }
 
@@ -39,8 +39,8 @@ public class WishListViewModel extends AndroidViewModel {
         productsRepositoryRoom.delete(productRecord);
     }
 
-    public void deleteAllAutoRecords() {
-        productsRepositoryRoom.deleteAllAutoRecords();
+    public void deleteAllProductRecords() {
+        productsRepositoryRoom.deleteAllProductRecords();
     }
 
 //    public void delete(int id) {
