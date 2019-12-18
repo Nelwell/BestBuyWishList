@@ -26,8 +26,8 @@ public class ProductsRepositoryRoom {
         return productDAO.getAllProductRecords();
     }
 
-    public LiveData<ProductRecord> getProductBySku(String sku) {
-        return productDAO.getProductBySku(sku);
+    public LiveData<ProductRecord> getProductById(int id) {
+        return productDAO.getProductById(id);
     }
 
     public void insert(ProductRecord productRecord) {

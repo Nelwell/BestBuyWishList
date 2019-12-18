@@ -27,12 +27,8 @@ public class WishListViewModel extends AndroidViewModel {
         return productListRecords;
     }
 
-    public LiveData<ProductRecord> getProductBySku(String sku) {
-        return productsRepositoryRoom.getProductBySku(sku);
-    }
-
-    public void insert(ProductRecord productRecord) {
-        productsRepositoryRoom.insert(productRecord);
+    public LiveData<ProductRecord> getProductById(int id) {
+        return productsRepositoryRoom.getProductById(id);
     }
 
     public void delete(ProductRecord productRecord) {

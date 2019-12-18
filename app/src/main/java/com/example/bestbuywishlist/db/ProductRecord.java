@@ -7,27 +7,26 @@ import androidx.room.PrimaryKey;
 @Entity
 public class ProductRecord {
 
-    @NonNull
-    @PrimaryKey
-    private String sku;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     @NonNull
     private String salePrice;
     private String name;
+    private String image;
 
-    public ProductRecord(@NonNull String sku, @NonNull String salePrice, String name) {
-        this.sku = sku;
+    public ProductRecord(@NonNull String salePrice, String name, String image) {
         this.salePrice = salePrice;
         this.name = name;
+        this.image = image;
     }
 
-    @NonNull
-    public String getSku() {
-        return sku;
+    public int getId() {
+        return id;
     }
 
-    public void setSku(@NonNull String sku) {
-        this.sku = sku;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @NonNull
@@ -47,12 +46,21 @@ public class ProductRecord {
         this.name = name;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "ProductRecord{" +
-                "sku='" + sku + '\'' +
+                "id=" + id +
                 ", salePrice='" + salePrice + '\'' +
                 ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

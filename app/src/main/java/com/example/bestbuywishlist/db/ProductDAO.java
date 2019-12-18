@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface ProductDAO {
 
-    @Query("SELECT * FROM ProductRecord ORDER BY name")
+    @Query("SELECT * FROM ProductRecord ORDER BY id")
     LiveData<List<ProductRecord>> getAllProductRecords();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE) // Ignore new record for an existing product
@@ -24,8 +24,8 @@ public interface ProductDAO {
     @Query("DELETE FROM ProductRecord")
     void deleteAllProducts();
 
-    @Query("SELECT * FROM ProductRecord WHERE sku = :sku LIMIT 1")
-    LiveData<ProductRecord> getProductBySku(String sku);
+    @Query("SELECT * FROM ProductRecord WHERE id = :id LIMIT 1")
+    LiveData<ProductRecord> getProductById(int id);
 
 //    @Query("SELECT * FROM ProductRecord WHERE year like '%' ) // TODO finish query
 //    LiveData<AutoRecord> getRecordForAuto(String autoId);

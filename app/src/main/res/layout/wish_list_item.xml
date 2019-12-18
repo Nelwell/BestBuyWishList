@@ -18,16 +18,16 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/product_thumbnail"
+            android:id="@+id/item_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorImageBackground"
             android:scaleType="fitCenter"
-            cardview:layout_constraintBottom_toTopOf="@id/product_name"
+            cardview:layout_constraintBottom_toTopOf="@id/item_name"
             cardview:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/product_name"
+            android:id="@+id/item_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -40,10 +40,10 @@
             cardview:layout_constraintBottom_toBottomOf="parent"
             cardview:layout_constraintEnd_toEndOf="parent"
             cardview:layout_constraintHorizontal_bias="0.498"
-            cardview:layout_constraintStart_toEndOf="@+id/product_price" />
+            cardview:layout_constraintStart_toEndOf="@+id/item_price" />
 
         <TextView
-            android:id="@+id/product_price"
+            android:id="@+id/item_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

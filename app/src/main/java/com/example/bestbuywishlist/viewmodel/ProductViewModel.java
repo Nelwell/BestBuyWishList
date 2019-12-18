@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.bestbuywishlist.db.ProductRecord;
+import com.example.bestbuywishlist.db.ProductsRepositoryRoom;
 import com.example.bestbuywishlist.model.Product;
 import com.example.bestbuywishlist.repository.ProductsRepository;
 
@@ -15,11 +17,12 @@ public class ProductViewModel extends AndroidViewModel {
 
     private ProductsRepository productsRepository;
     private MutableLiveData<List<Product>> allProducts;
+    private ProductsRepositoryRoom productsRepositoryRoom;
 
     public ProductViewModel(@NonNull Application application) {
         super(application);
         productsRepository = new ProductsRepository();
-//        allProducts = productsRepository.searchProducts();
+        productsRepositoryRoom = new ProductsRepositoryRoom(application);
     }
 
     public MutableLiveData<List<Product>> getAllProducts() {
@@ -28,6 +31,10 @@ public class ProductViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<Product>> searchProducts(String searchTerms) {
         return productsRepository.searchProducts(searchTerms);
+    }
+
+    public void insert(ProductRecord productRecord) {
+        productsRepositoryRoom.insert(productRecord);
     }
 
 //    public MutableLiveData<List<Product>> insert(List<Product> product) {

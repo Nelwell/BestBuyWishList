@@ -15,9 +15,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 Main Activity handles active fragments
  */
 public class MainActivity extends AppCompatActivity implements
-        ProductBrowserFragment.UponAppLaunchListener {
+        ProductBrowserFragment.UponAppLaunchListener,
+        WishListFragment.WishListNavButtonListener {
 
     private static final String TAG_VIEW_PRODUCT_BROWSER = "ProductBrowserFragment";
+    private static final String TAG_VIEW_WISH_LIST = "WishListFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +47,33 @@ public class MainActivity extends AppCompatActivity implements
                             viewProductBrowser();
                             break;
                         case R.id.nav_wishlist:
-                            Fragment selectedFragment = new WishListFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
-                                    selectedFragment).commit();
+                            viewWishList();
                             break;
                     }
 
-                    return true;
+                    return true; // Changes appearance of selected Bottom Nav button
                 }
             };
 
     @Override
     public void viewProductBrowser() {
-        Fragment selectedFragment = getSupportFragmentManager().findFragmentByTag(TAG_VIEW_PRODUCT_BROWSER);
-        if (selectedFragment == null) {
-            selectedFragment = new ProductBrowserFragment();
+        Fragment browserFragment = getSupportFragmentManager().findFragmentByTag(TAG_VIEW_PRODUCT_BROWSER);
+        if (browserFragment == null) {
+            browserFragment = new ProductBrowserFragment();
         }
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_layout, selectedFragment, TAG_VIEW_PRODUCT_BROWSER);
-        ft.commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, browserFragment, TAG_VIEW_PRODUCT_BROWSER)
+                .commit();
+    }
+
+    @Override
+    public void viewWishList() {
+        Fragment wishListFragment = getSupportFragmentManager().findFragmentByTag(TAG_VIEW_WISH_LIST);
+        if (wishListFragment == null) {
+            wishListFragment = new WishListFragment();
+        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, wishListFragment, TAG_VIEW_WISH_LIST)
+                .commit();
     }
 }

@@ -8,11 +8,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bestbuywishlist.R;
 import com.example.bestbuywishlist.db.ProductRecord;
 import com.example.bestbuywishlist.model.Product;
+import com.example.bestbuywishlist.viewmodel.ProductViewModel;
 import com.example.bestbuywishlist.viewmodel.WishListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
@@ -23,12 +25,13 @@ import java.util.List;
 // Class to create Adapter and perform adapter functions
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductHolder> {
 
-    private WishListViewModel wishListViewModel;
+    private ProductViewModel productViewModel;
 
     // Where adapter stores its data
     private List<Product> product = new ArrayList<>();
 
-    public ProductAdapter(WishListViewModel wishListViewModel) {
+    public ProductAdapter(ProductViewModel productViewModel) {
+        this.productViewModel = productViewModel;
     }
 
     @NonNull
@@ -58,16 +61,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
             @Override
             public void onClick(View v) {
                 ProductRecord wishListedProduct = new ProductRecord(
-                        wishListViewModel.deleteAllAutoRecords();
-                        currentProduct.getSku(), currentProduct.getPrice(), currentProduct.getName());
-                wishListViewModel.insert(wishListedProduct);
+                        currentProduct.getPrice(), currentProduct.getName(), currentProduct.getImage());
+                productViewModel.insert(wishListedProduct);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return product.size();
+        return product.size(); // Number of products in current list
     }
 
     public void setProduct(List<Product> product) {
