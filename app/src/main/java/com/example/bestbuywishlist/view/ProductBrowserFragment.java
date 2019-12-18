@@ -62,8 +62,8 @@ public class ProductBrowserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_browser, container, false);
 
+//        noResultsTextView = view.findViewById(R.id.empty_search_message); // couldn't get working in time.. null object reference
         // Get resource ID to recyclerView
-        noResultsTextView = view.findViewById(R.id.empty_search_message);
         browserRecyclerView = view.findViewById(R.id.browser_list_rv);
         // Creates Grid Layout in recyclerView, 2 columns wide
         browserRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -83,6 +83,14 @@ public class ProductBrowserFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // couldn't get working in time.. null object reference
+                // Displays placeholder message in place of empty recyclerView
+//                if (productViewModel.getAllProducts() == null) {
+//                    noResultsTextView.setVisibility(View.VISIBLE);
+//                }
+//                if (productViewModel.getAllProducts().getValue().size() > 0) {
+//                    noResultsTextView.setVisibility(View.INVISIBLE);
+//                }
                 // Gets all matching products from view model
                 productViewModel.searchProducts(searchEditText.getText().toString().
                         // Manipulates editText string to match formatting for Best Buy API when using multiple keywords
@@ -97,20 +105,16 @@ public class ProductBrowserFragment extends Fragment {
                         productAdapter.setProduct(products);
                     }
                 });
-                searchEditText.setText(""); // reset search bar to empty after performing a search
+                searchEditText.setText(""); // Reset search bar to empty after performing a search
             }
         });
 
         return view;
     }
 
+    // Overrides onResume() to check if there are any results on screen or not
     @Override
     public void onResume() {
         super.onResume();
-        if (productViewModel.getAllProducts().getValue().size() > 0) {
-            noResultsTextView.setVisibility(View.INVISIBLE);
-        } else {
-            noResultsTextView.setVisibility(View.VISIBLE);
-        }
     }
 }

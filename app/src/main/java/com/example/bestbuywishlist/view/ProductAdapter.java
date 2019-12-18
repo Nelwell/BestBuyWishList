@@ -8,14 +8,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bestbuywishlist.R;
 import com.example.bestbuywishlist.db.ProductRecord;
 import com.example.bestbuywishlist.model.Product;
 import com.example.bestbuywishlist.viewmodel.ProductViewModel;
-import com.example.bestbuywishlist.viewmodel.WishListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 

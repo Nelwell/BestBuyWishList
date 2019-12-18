@@ -39,6 +39,7 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.WishLi
     public void onBindViewHolder(@NonNull WishListHolder holder, final int position) {
         final ProductRecord currentItem = wishListItem.get(position);
 
+        holder.itemPriceTextView.setText("$"+currentItem.getSalePrice());
         holder.itemNameTextView.setText(currentItem.getName());
         if (currentItem.getImage() != null) {
             Picasso.get().load(currentItem.getImage()).into(holder.itemImageView);
@@ -57,11 +58,13 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.WishLi
     }
 
     class WishListHolder extends RecyclerView.ViewHolder {
+        private TextView itemPriceTextView;
         private TextView itemNameTextView;
         private ImageView itemImageView;
 
         private WishListHolder(@NonNull View itemView) {
             super(itemView);
+            itemPriceTextView = itemView.findViewById(R.id.item_price);
             itemNameTextView = itemView.findViewById(R.id.item_name);
             itemImageView = itemView.findViewById(R.id.item_image);
 

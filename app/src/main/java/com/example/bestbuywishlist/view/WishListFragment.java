@@ -32,7 +32,6 @@ public class WishListFragment extends Fragment {
     private RecyclerView wishListRecyclerView;
     private WishListNavButtonListener wishListNavButtonListener;
     private WishListViewModel wishListViewModel;
-//    private StartNewMaintenanceItemListener newMaintenanceItemListener;
 
     public interface WishListNavButtonListener {
         void viewWishList();
@@ -86,28 +85,6 @@ public class WishListFragment extends Fragment {
             }
         }).attachToRecyclerView(wishListRecyclerView);
 
-//        searchEditText = view.findViewById(R.id.search_edit_text);
-//        searchButton = view.findViewById(R.id.search_button);
-//        searchButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                productViewModel.searchProducts(searchEditText.getText().toString().
-//                        replaceAll("\\s+", "&search=")).observe(getActivity(), new Observer<List<Product>>() {
-//
-//                    @Override
-//                    public void onChanged(List<Product> products) {
-//                        if (searchEditText.getText().toString().length() > 0) {
-//                            wishListRecyclerView.getLayoutManager().scrollToPosition(0);
-//                        }
-//                        adapter.setProduct(products);
-//                        // For testing
-////                Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//                searchEditText.setText("");
-//            }
-//        });
-
         return view;
     }
 
@@ -125,11 +102,8 @@ public class WishListFragment extends Fragment {
                 Log.d(TAG_WISH_LIST_ADAPTER, "Wish list items are: " + items);
                 // Set data in the adapter
                 wishListAdapter.setWishListItem(items);
-                if (wishListViewModel.getAllProductRecords().getValue().size() == 0) {
-
-
-                }
-//                    mAutoRecyclerView.smoothScrollToPosition(mAutoListViewModel.getAllAutoRecords().getValue().size() - 1);
+//                if (wishListViewModel.getAllProductRecords().getValue().size() == 0) {
+//                }
             }
         });
     }
