@@ -18,8 +18,10 @@ public class MainActivity extends AppCompatActivity implements
         ProductBrowserFragment.UponAppLaunchListener,
         WishListFragment.WishListNavButtonListener {
 
-    private static final String TAG_VIEW_PRODUCT_BROWSER = "ProductBrowserFragment";
-    private static final String TAG_VIEW_WISH_LIST = "WishListFragment";
+//    private static final String TAG_VIEW_PRODUCT_BROWSER = "ProductBrowserFragment";
+//    private static final String TAG_VIEW_WISH_LIST = "WishListFragment";
+    private ProductBrowserFragment productBrowserFragment;
+    private WishListFragment wishListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,23 +59,21 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void viewProductBrowser() {
-        Fragment browserFragment = getSupportFragmentManager().findFragmentByTag(TAG_VIEW_PRODUCT_BROWSER);
-        if (browserFragment == null) {
-            browserFragment = new ProductBrowserFragment();
+        if (productBrowserFragment == null) {
+            productBrowserFragment = new ProductBrowserFragment();
         }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_layout, browserFragment, TAG_VIEW_PRODUCT_BROWSER)
+                .replace(R.id.frame_layout, productBrowserFragment)
                 .commit();
     }
 
     @Override
     public void viewWishList() {
-        Fragment wishListFragment = getSupportFragmentManager().findFragmentByTag(TAG_VIEW_WISH_LIST);
         if (wishListFragment == null) {
             wishListFragment = new WishListFragment();
         }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_layout, wishListFragment, TAG_VIEW_WISH_LIST)
+                .replace(R.id.frame_layout, wishListFragment)
                 .commit();
     }
 }

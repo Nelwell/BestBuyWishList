@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -32,7 +33,7 @@ public class ProductBrowserFragment extends Fragment {
     private ProductViewModel productViewModel;
     private UponAppLaunchListener uponAppLaunchListener;
     private EditText searchEditText;
-    private TextView noResultsTextView;
+//    private TextView noResultsTextView;
     private Button searchButton;
 
     public interface UponAppLaunchListener {

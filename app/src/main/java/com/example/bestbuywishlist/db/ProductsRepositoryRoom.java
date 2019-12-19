@@ -97,19 +97,4 @@ public class ProductsRepositoryRoom {
             return null;
         }
     }
-
-//    private static class DeleteAutoIDAsyncTask extends AsyncTask<Integer, Void, Void> {
-//
-//        AutoDAO autoDAO;
-//
-//        public DeleteAutoIDAsyncTask(AutoDAO autoDAO) {
-//            this.autoDAO = autoDAO;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Integer... id) {
-//            autoDAO.delete(id[0]);
-//            return null;
-//        }
-//    }
 }

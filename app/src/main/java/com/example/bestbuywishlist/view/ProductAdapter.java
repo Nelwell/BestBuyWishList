@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -52,7 +53,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         holder.productCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // Was going to make open a detail view of product, ran out of time
             }
         });
         holder.addToWishList.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +62,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
                 ProductRecord wishListedProduct = new ProductRecord(
                         currentProduct.getPrice(), currentProduct.getName(), currentProduct.getImage());
                 productViewModel.insert(wishListedProduct);
+//                Toast.makeText(this, "Item added to Wish List", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -39,6 +39,7 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.WishLi
     public void onBindViewHolder(@NonNull WishListHolder holder, final int position) {
         final ProductRecord currentItem = wishListItem.get(position);
 
+        // Bind values to item views
         holder.itemPriceTextView.setText("$"+currentItem.getSalePrice());
         holder.itemNameTextView.setText(currentItem.getName());
         if (currentItem.getImage() != null) {
