@@ -92,6 +92,7 @@ public class ProductBrowserFragment extends Fragment {
 //                if (productViewModel.getAllProducts().getValue().size() > 0) {
 //                    noResultsTextView.setVisibility(View.INVISIBLE);
 //                }
+
                 // Gets all matching products from view model
                 productViewModel.searchProducts(searchEditText.getText().toString().
                         // Manipulates editText string to match formatting for Best Buy API when using multiple keywords
